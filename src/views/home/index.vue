@@ -1,13 +1,16 @@
 <template>
-    <div>
-        home
-    </div>
+  <div>home</div>
 </template>
-<script >
+<script setup>
+import { useStore } from "@/store";
 
-import {httpDashboardCampaignTop10} from '@/api/home'
+let store = useStore();
 
-console.log(httpDashboardCampaignTop10)
+console.log(store.name, "useStore");
+
+import { httpDashboardCampaignTop10 } from "@/api/home";
+
+// console.log(httpDashboardCampaignTop10)
 // httpDashboardCampaignTop10().then(res=>{
 //     console.log(res,'6666')
 // })

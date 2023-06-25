@@ -21,3 +21,5 @@ yarn add axios
 yarn add pinia
 
 yarn add element-plus
+
+npm install --save normalize.css

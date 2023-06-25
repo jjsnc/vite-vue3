@@ -11,4 +11,13 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 技术栈
 
 
-"create-vite@4.3.2
+
+yarn create vite
+
+yarn add vue-router@4
+
+yarn add axios
+
+yarn add pinia
+
+yarn add element-plus

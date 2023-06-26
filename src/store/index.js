@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import _ from "lodash";
 import {
   httpSignIn,
   httpPermissionModulesLogin,
@@ -21,8 +22,48 @@ import {
   get_user,
   get_messages,
   set_messages,
+  set_accessed_routes,
+  get_accessed_routes,
+  set_authority_routes,
+  get_authority_routes,
 } from "@/utils/auth";
+function filterRoutes(modules) {
+  //多平台link 修改为单平台link
+  _.map(modules, (item) => {
+    let newLink = "";
+    let { link } = item;
+    if (!link) {
+      return;
+    }
+    newLink = link.split("#")[1];
+    if (newLink.includes("atd")) {
+      newLink = newLink.split("atd")[1];
+    } else if (newLink.includes("platform")) {
+      newLink = newLink.split("platform")[1];
+    }
+    item.newLink = newLink;
+  });
 
+  let menus = [];
+
+  let parentMenus = _.filter(modules, { parentId: String(0) });
+
+  // 尊重历史代码 和原来保持一致 我也不知道为啥要这样
+  parentMenus = parentMenus.filter((item) => {
+    return item.menu !== "0";
+  });
+
+  _.map(parentMenus, (module) => {
+    let childrenMenus = _.filter(modules, {
+      parentId: String(module.id),
+      menu: "1",
+    });
+    module.children = childrenMenus;
+    menus.push(module);
+  });
+
+  return menus;
+}
 // 第一个参数是应用程序中 store 的唯一 id
 
 export const useSettingsStore = defineStore("settings", () => {
@@ -42,6 +83,50 @@ export const useAppStore = defineStore("app", () => {
   const size = ref("medium");
 
   return { sidebar, device, size };
+});
+
+export const usePermissionStore = defineStore("permission", {
+  state: () => ({
+    permission_routes: JSON.parse(get_accessed_routes() || "{}"),
+    authorityRoutes: JSON.parse(get_authority_routes() || "[]"),
+  }),
+  actions: {
+    handleSetRoutes(routes) {
+      this.permission_routes = routes;
+    },
+    handleGenerateRoutes(modules) {
+      console.log(555);
+
+      return new Promise((resolve) => {
+        //对模块转换为数据集并根据 sort排序
+        modules = _.sortBy(_.map(modules), function (o) {
+          return _.toInteger(o.sort);
+        });
+        let accessedRoutes = filterRoutes(modules);
+
+        this.handleSetRoutes(accessedRoutes);
+
+        set_accessed_routes(JSON.stringify(accessedRoutes));
+
+        resolve(accessedRoutes);
+      });
+    },
+    handleAuthorityRoutes(modules) {
+      return new Promise((resolve) => {
+        let _routes = [];
+
+        modules.forEach((item) => {
+          if (item.link.length > 2) {
+            let smallRoute = item?.link?.split("#")[1].slice(4);
+            _routes.push(smallRoute);
+          }
+        });
+        this.authorityRoutes = _routes;
+        set_authority_routes(JSON.stringify(_routes));
+        resolve();
+      });
+    },
+  },
 });
 
 export const useUserStore = defineStore("user", {
@@ -125,6 +210,7 @@ export const useUserStore = defineStore("user", {
           set_messages(JSON.stringify(messages));
 
           let permissionStore = usePermissionStore();
+      
           permissionStore.handleGenerateRoutes(modules);
           permissionStore.handleAuthorityRoutes(modules);
 

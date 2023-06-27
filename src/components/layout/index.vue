@@ -35,25 +35,23 @@ let classObj = computed(() => {
 </script>
 
 <style lang="scss">
-
-
 .app-wrapper {
   display: flex;
-
-  height: 100vh;
   .sidebar-container {
-    width: 200px;
+    width: var(--sideBarWidth);
+    height: 100vh;
+    overflow: hidden;
   }
   .main-container {
     flex: 1;
-    height: 100%;
-    border: 1px solid red;
+    height: 100vh;
+    transition: margin-left 0.28s;
     .fixed-header {
       position: fixed;
       top: 0;
       right: 0;
       z-index: 9;
-      width: calc(100% - 200px);
+      width: calc(100% - var(--sideBarWidth));
       transition: width 0.28s;
     }
   }

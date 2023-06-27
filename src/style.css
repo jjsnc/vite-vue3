@@ -8,6 +8,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --sideBarWidth:200px
 }
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
 

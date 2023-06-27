@@ -7,7 +7,6 @@
     <el-icon v-if="item.icon"><setting /></el-icon>
     <template #title>{{ item.name }}</template>
   </el-menu-item>
-
   <el-sub-menu v-else :index="item.id">
     <template #title>
       <el-icon><location /></el-icon>

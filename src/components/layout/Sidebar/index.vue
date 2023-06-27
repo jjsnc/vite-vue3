@@ -3,18 +3,21 @@
     <div>
       <el-button @click="handleToggle" type="primary">Primary</el-button>
     </div>
-    <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      :collapse="isCollapse"
-      :collapse-transition="true"
-    >
-      <Menu-item
-        v-for="route in permission_routes"
-        :key="route.id"
-        :item="route"
-      />
-    </el-menu>
+    <el-scrollbar>
+      <el-menu
+        default-active="2"
+        class="el-menu-vertical-demo"
+        :collapse="isCollapse"
+        :collapse-transition="false"
+        mode="vertical"
+      >
+        <Menu-item
+          v-for="route in permission_routes"
+          :key="route.id"
+          :item="route"
+        />
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 

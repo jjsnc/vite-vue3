@@ -81,8 +81,11 @@ export const useAppStore = defineStore("app", () => {
   });
   const device = ref("desktop");
   const size = ref("medium");
+  function handleToggleSidebar() {
+    this.sidebar.opened = !this.sidebar.opened;
+  }
 
-  return { sidebar, device, size };
+  return { sidebar, device, size, handleToggleSidebar };
 });
 
 export const usePermissionStore = defineStore("permission", {
@@ -210,7 +213,7 @@ export const useUserStore = defineStore("user", {
           set_messages(JSON.stringify(messages));
 
           let permissionStore = usePermissionStore();
-      
+
           permissionStore.handleGenerateRoutes(modules);
           permissionStore.handleAuthorityRoutes(modules);
 

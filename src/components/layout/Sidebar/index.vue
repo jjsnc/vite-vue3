@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div>
-      <el-button @click="handleToggle" type="primary">Primary</el-button>
-    </div>
+    <div>{{ isCollapse }}</div>
     <el-scrollbar>
       <el-menu
         default-active="2"
@@ -22,21 +20,20 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { usePermissionStore } from "@/store";
-
+import { computed } from "vue";
+import { usePermissionStore, useAppStore } from "@/store";
 import MenuItem from "./menuItem.vue";
-
-const isCollapse = ref(false);
 
 let permissionStore = usePermissionStore();
 
 let permission_routes = computed(() => {
   return permissionStore.permission_routes;
 });
-function handleToggle() {
-  isCollapse.value = !isCollapse.value;
-}
+
+let appStore = useAppStore();
+let isCollapse = computed(() => {
+  return appStore.sidebar.opened;
+});
 </script>
 
 <style>

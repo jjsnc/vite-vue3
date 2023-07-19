@@ -1,6 +1,5 @@
 <template>
   <div>
-    home
     <el-row>
       <el-button>默认按钮</el-button>
       <el-button type="primary">主要按钮</el-button>
@@ -17,7 +16,6 @@ import { computed } from "vue";
 let useStore = useAppStore();
 
 let sizeValue = computed(() => useStore.size);
-
 
 import { httpDashboardCampaignTop10 } from "@/api/home";
 

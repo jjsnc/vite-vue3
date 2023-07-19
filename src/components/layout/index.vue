@@ -38,6 +38,7 @@ let classObj = computed(() => {
 .app-wrapper {
   display: flex;
   .sidebar-container {
+    transition: width 0.28s;
     width: var(--sideBarWidth);
     height: 100vh;
     overflow: hidden;
@@ -47,6 +48,7 @@ let classObj = computed(() => {
     height: 100vh;
     transition: margin-left 0.28s;
     .fixed-header {
+      transition: width 0.28s;
       position: fixed;
       top: 0;
       right: 0;
@@ -54,6 +56,15 @@ let classObj = computed(() => {
       width: calc(100% - var(--sideBarWidth));
       transition: width 0.28s;
     }
+  }
+}
+
+.hideSidebar {
+  .sidebar-container {
+    width: 54px !important;
+  }
+  .fixed-header {
+    width: calc(100% - 54px) !important;
   }
 }
 </style>

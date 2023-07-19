@@ -5,8 +5,8 @@
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
-        :collapse="isCollapse"
-        :collapse-transition="false"
+        :collapse="!isCollapse"
+        :collapse-transition="true"
         mode="vertical"
       >
         <Menu-item
@@ -34,14 +34,16 @@ let appStore = useAppStore();
 let isCollapse = computed(() => {
   return appStore.sidebar.opened;
 });
+
+console.log(isCollapse.value)
 </script>
 
 <style>
 .sidebar-container {
   background: #fff;
 }
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+/* .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
-}
+} */
 </style>

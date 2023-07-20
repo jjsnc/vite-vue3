@@ -19,7 +19,7 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import {
   Document,
   Menu as IconMenu,

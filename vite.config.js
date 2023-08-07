@@ -5,7 +5,9 @@ import { resolve } from "path";
 
 // https://vitejs.dev/config/
 
-const baseURL = "https://beta.inmad.cn";
+// const baseURL = "https://beta.inmad.cn";
+
+const baseURL = "http://172.16.30.211:9090/";
 
 export default defineConfig({
   plugins: [vue()],
@@ -17,7 +19,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/interface": {
+      "/adminapi": {
         target: baseURL,
         changeOrigin: true,
       },

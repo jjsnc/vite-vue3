@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "@/utils/auth";
 // create an axios instance
 const service = axios.create({
-  baseURL: "/interface/",
+  baseURL: "",
   timeout: 1000,
 });
 // Add a request interceptor

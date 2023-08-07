@@ -107,46 +107,4 @@ export const useAppStore = defineStore("app", () => {
   return { sidebar, device, size, handleToggleSidebar };
 });
 
-export const usePermissionStore = defineStore("permission", {
-  state: () => ({
-    permission_routes: JSON.parse(get_accessed_routes() || "{}"),
-    authorityRoutes: JSON.parse(get_authority_routes() || "[]"),
-  }),
-  actions: {
-    handleSetRoutes(routes) {
-      this.permission_routes = routes;
-    },
-    handleGenerateRoutes(modules) {
-      console.log(555);
 
-      return new Promise((resolve) => {
-        //对模块转换为数据集并根据 sort排序
-        modules = _.sortBy(_.map(modules), function (o) {
-          return _.toInteger(o.sort);
-        });
-        let accessedRoutes = filterRoutes(modules);
-
-        this.handleSetRoutes(accessedRoutes);
-
-        set_accessed_routes(JSON.stringify(accessedRoutes));
-
-        resolve(accessedRoutes);
-      });
-    },
-    handleAuthorityRoutes(modules) {
-      return new Promise((resolve) => {
-        let _routes = [];
-
-        modules.forEach((item) => {
-          if (item.link.length > 2) {
-            let smallRoute = item?.link?.split("#")[1].slice(4);
-            _routes.push(smallRoute);
-          }
-        });
-        this.authorityRoutes = _routes;
-        set_authority_routes(JSON.stringify(_routes));
-        resolve();
-      });
-    },
-  },
-});

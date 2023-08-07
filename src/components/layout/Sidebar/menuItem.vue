@@ -4,12 +4,13 @@
     :index="item.newLink"
     @click="handleActiveRouter(item)"
   >
-    <el-icon v-if="item.icon"><setting /></el-icon>
+    <i class="fix_left"></i>
+    <i class="el-menu-icon" v-if="item.parent_id == 0" :class="item.icon"></i>
     <template #title>{{ item.name }}</template>
   </el-menu-item>
   <el-sub-menu v-else :index="item.id">
     <template #title>
-      <el-icon><location /></el-icon>
+      <i v-if="item.parent_id == 0" class="el-menu-icon" :class="item.icon"></i>
       <span>{{ item.name }}</span>
     </template>
     <Menu-item v-for="child in item.children" :key="child.id" :item="child" />

@@ -20,13 +20,13 @@
 
 <script setup>
 import { computed } from "vue";
-import { usePermissionStore, useAppStore } from "@/store";
+import { useUserStore, useAppStore } from "@/store";
 import MenuItem from "./menuItem.vue";
 
-let permissionStore = usePermissionStore();
+let permissionStore = useUserStore();
 
 let permission_routes = computed(() => {
-  return permissionStore.permission_routes;
+  return permissionStore.menus;
 });
 
 let appStore = useAppStore();
